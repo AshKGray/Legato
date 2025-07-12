@@ -1,0 +1,1 @@
+# Legato - Music Collaboration Platform

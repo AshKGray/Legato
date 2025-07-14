@@ -1,14 +1,19 @@
 // shared/config/app-config.js
-require('dotenv').config();
 
 module.exports = {
-  database: {
+  db: {
+    database: 'legato_dev',
+    username: 'developer',
+    password: 'devpass123',
     host: 'localhost',
     port: 5432,
-    database: 'legato_dev',
-    username: 'developer', 
-    password: 'devpass123',
     dialect: 'postgres',
-    // ... rest of config
-  }
+    pool: {
+      max: 10,
+      min: 0,
+      acquire: 30000,
+      idle: 10000,
+    },
+    logging: false,
+  },
 };

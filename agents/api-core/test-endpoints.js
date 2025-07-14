@@ -40,7 +40,7 @@ async function testAPI() {
     // Test 3: User Login
     console.log('\n3. Testing User Login...');
     const loginResponse = await axios.post(`${BASE_URL}/auth/login`, {
-      email: registerData.email,
+      username: registerData.username,
       password: registerData.password
     });
     console.log('✅ User logged in successfully');
@@ -51,8 +51,8 @@ async function testAPI() {
       headers: { Authorization: `Bearer ${authToken}` }
     });
     console.log('✅ User profile retrieved:', {
-      username: profileResponse.data.username,
-      skills: profileResponse.data.skills
+      username: profileResponse.data.user.username,
+      skills: profileResponse.data.user.skills
     });
 
     // Test 5: Create Song
@@ -72,16 +72,16 @@ async function testAPI() {
       headers: { Authorization: `Bearer ${authToken}` }
     });
     console.log('✅ Song created:', {
-      id: songResponse.data.id,
-      title: songResponse.data.title
+      id: songResponse.data.song.id,
+      title: songResponse.data.song.title
     });
     
-    songId = songResponse.data.id;
+    songId = songResponse.data.song.id;
 
     // Test 6: Get All Songs
     console.log('\n6. Testing Get All Songs...');
     const songsResponse = await axios.get(`${BASE_URL}/songs`);
-    console.log('✅ Songs retrieved:', songsResponse.data.length, 'songs found');
+    console.log('✅ Songs retrieved:', songsResponse.data.songs.length, 'songs found');
 
     // Test 7: Create Collaboration
     console.log('\n7. Testing Collaboration Creation...');
@@ -95,11 +95,11 @@ async function testAPI() {
       headers: { Authorization: `Bearer ${authToken}` }
     });
     console.log('✅ Collaboration created:', {
-      id: collaborationResponse.data.id,
-      type: collaborationResponse.data.contributionType
+      id: collaborationResponse.data.collaboration.id,
+      type: collaborationResponse.data.collaboration.contributionType
     });
     
-    collaborationId = collaborationResponse.data.id;
+    collaborationId = collaborationResponse.data.collaboration.id;
 
     // Test 8: Vote on Collaboration
     console.log('\n8. Testing Voting...');
@@ -113,8 +113,8 @@ async function testAPI() {
       headers: { Authorization: `Bearer ${authToken}` }
     });
     console.log('✅ Vote cast:', {
-      id: voteResponse.data.id,
-      value: voteResponse.data.value
+      id: voteResponse.data.vote.id,
+      value: voteResponse.data.vote.value
     });
 
     // Test 9: Create Comment
@@ -128,16 +128,16 @@ async function testAPI() {
       headers: { Authorization: `Bearer ${authToken}` }
     });
     console.log('✅ Comment created:', {
-      id: commentResponse.data.id,
-      content: commentResponse.data.content
+      id: commentResponse.data.comment.id,
+      content: commentResponse.data.comment.content
     });
     
-    commentId = commentResponse.data.id;
+    commentId = commentResponse.data.comment.id;
 
     // Test 10: Get Comments for Song
     console.log('\n10. Testing Get Comments...');
     const commentsResponse = await axios.get(`${BASE_URL}/comments/song/${songId}`);
-    console.log('✅ Comments retrieved:', commentsResponse.data.length, 'comments found');
+    console.log('✅ Comments retrieved:', commentsResponse.data.comments.length, 'comments found');
 
     // Test 11: Follow User (create second user first)
     console.log('\n11. Testing Follow System...');
@@ -151,7 +151,7 @@ async function testAPI() {
     const secondUserResponse = await axios.post(`${BASE_URL}/auth/register`, secondUserData);
     const secondUserId = secondUserResponse.data.user.id;
 
-    const followResponse = await axios.post(`${BASE_URL}/follows/${secondUserId}`, {}, {
+    const followResponse = await axios.post(`${BASE_URL}/follows`, { followingId: secondUserId }, {
       headers: { Authorization: `Bearer ${authToken}` }
     });
     console.log('✅ User followed successfully');
@@ -159,12 +159,12 @@ async function testAPI() {
     // Test 12: Get Followers
     console.log('\n12. Testing Get Followers...');
     const followersResponse = await axios.get(`${BASE_URL}/follows/${secondUserId}/followers`);
-    console.log('✅ Followers retrieved:', followersResponse.data.length, 'followers found');
+    console.log('✅ Followers retrieved:', followersResponse.data.followers.length, 'followers found');
 
     // Test 13: Search Users
     console.log('\n13. Testing User Search...');
-    const searchResponse = await axios.get(`${BASE_URL}/users/search?q=test`);
-    console.log('✅ User search completed:', searchResponse.data.length, 'users found');
+    const searchResponse = await axios.get(`${BASE_URL}/users?search=test`);
+    console.log('✅ User search completed:', searchResponse.data.users.length, 'users found');
 
     // Test 14: Update Song
     console.log('\n14. Testing Song Update...');

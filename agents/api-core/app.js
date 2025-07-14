@@ -8,12 +8,11 @@ const { sequelize } = require('../database/models');
 // Import routes
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
-// Temporarily disable routes with file upload issues
-// const songRoutes = require('./routes/songs');
-// const collaborationRoutes = require('./routes/collaborations');
-// const voteRoutes = require('./routes/votes');
-// const commentRoutes = require('./routes/comments');
-// const followRoutes = require('./routes/follows');
+const songRoutes = require('./routes/songs');
+const collaborationRoutes = require('./routes/collaborations');
+const voteRoutes = require('./routes/votes');
+const commentRoutes = require('./routes/comments');
+const followRoutes = require('./routes/follows');
 
 const app = express();
 
@@ -24,12 +23,12 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Routes
 app.use('/api/auth', authRoutes);
-// app.use('/api/users', userRoutes);
-// app.use('/api/songs', songRoutes);
-// app.use('/api/collaborations', collaborationRoutes);
-// app.use('/api/votes', voteRoutes);
-// app.use('/api/comments', commentRoutes);
-// app.use('/api/follows', followRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/songs', songRoutes);
+app.use('/api/collaborations', collaborationRoutes);
+app.use('/api/votes', voteRoutes);
+app.use('/api/comments', commentRoutes);
+app.use('/api/follows', followRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

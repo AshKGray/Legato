@@ -1,32 +1,24 @@
 {
-  "name": "legato-app",
+  "name": "legato-charts-discovery",
   "version": "1.0.0",
-  "description": "",
+  "description": "Charts, trending algorithms, and discovery engine for Legato music collaboration platform",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "jest",
+    "dev": "nodemon index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AshKGray/Legato.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/AshKGray/Legato/issues"
-  },
-  "homepage": "https://github.com/AshKGray/Legato#readme",
   "dependencies": {
-    "axios": "^1.10.0",
-    "bcrypt": "^6.0.0",
-    "cors": "^2.8.5",
-    "express": "^4.21.2",
-    "jsonwebtoken": "^9.0.2",
-    "multer": "^2.0.1",
-    "pg": "^8.16.3",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
     "redis": "^5.6.0",
-    "sequelize": "^6.37.7"
-  }
+    "node-cron": "^3.0.3"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.2"
+  },
+  "keywords": ["music", "charts", "discovery", "trending", "recommendations"],
+  "author": "Legato Team",
+  "license": "MIT"
 }

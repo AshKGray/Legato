@@ -1,6 +1,6 @@
 const path = require('path');
 
-const ALLOWED_EXTENSIONS = ['.mp3', '.wav', '.m4a', '.flac'];
+const ALLOWED_EXTENSIONS = ['.mp3', '.wav', '.m4a', '.flac', '.mov', '.mp4'];
 const ALLOWED_MIME_TYPES = [
   'audio/mpeg',
   'audio/wav',
@@ -8,6 +8,8 @@ const ALLOWED_MIME_TYPES = [
   'audio/mp4',
   'audio/x-m4a',
   'audio/flac',
+  'video/quicktime',
+  'video/mp4',
 ];
 const MAX_SIZE = 50 * 1024 * 1024; // 50MB
 

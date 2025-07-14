@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Legato</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="app-header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>🎵 Legato</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="#" class="nav-link">Discover</a>
+                <a href="#" class="nav-link">Charts</a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-primary" onclick="openUploadModal()">Upload Song</button>
+                <div class="user-menu">
+                    <img src="https://via.placeholder.com/32x32" alt="Profile" class="user-avatar" onclick="toggleUserMenu()">
+                    <div id="userDropdown" class="user-dropdown">
+                        <a href="profile.html" class="active">Profile</a>
+                        <a href="#" onclick="logout()">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="profile-main">
+        <div class="container">
+            <section class="profile-header">
+                <div class="profile-avatar-section">
+                    <div class="avatar-container">
+                        <img id="profileAvatar" src="https://via.placeholder.com/120x120" alt="Profile Picture" class="profile-avatar">
+                        <button class="avatar-edit-btn" onclick="openAvatarModal()">📷</button>
+                    </div>
+                    <div class="profile-info">
+                        <h1 id="profileName">Your Name</h1>
+                        <p id="profileBio">Music enthusiast and collaborator</p>
+                        <div class="profile-stats">
+                            <div class="stat">
+                                <strong id="profileSongs">0</strong>
+                                <span>Songs</span>
+                            </div>
+                            <div class="stat">
+                                <strong id="profileCollabs">0</strong>
+                                <span>Collaborations</span>
+                            </div>
+                            <div class="stat">
+                                <strong id="profileFollowers">0</strong>
+                                <span>Followers</span>
+                            </div>
+                            <div class="stat">
+                                <strong id="profileFollowing">0</strong>
+                                <span>Following</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-actions">
+                        <button class="btn-primary" onclick="openEditProfileModal()">Edit Profile</button>
+                        <button class="btn-secondary" onclick="shareProfile()">Share</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="profile-content">
+                <div class="profile-tabs">
+                    <button class="tab-btn active" onclick="showProfileTab('overview')">Overview</button>
+                    <button class="tab-btn" onclick="showProfileTab('songs')">Songs</button>
+                    <button class="tab-btn" onclick="showProfileTab('collaborations')">Collaborations</button>
+                    <button class="tab-btn" onclick="showProfileTab('settings')">Settings</button>
+                </div>
+
+                <!-- Overview Tab -->
+                <div id="overview" class="tab-content active">
+                    <div class="overview-grid">
+                        <div class="overview-section">
+                            <h3>Skills & Genres</h3>
+                            <div id="userSkills" class="skills-tags">
+                                <!-- Skills will be loaded here -->
+                            </div>
+                        </div>
+                        <div class="overview-section">
+                            <h3>Recent Activity</h3>
+                            <div id="recentActivity" class="activity-list">
+                                <!-- Recent activity will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Songs Tab -->
+                <div id="songs" class="tab-content">
+                    <div class="section-header">
+                        <h3>My Songs</h3>
+                        <div class="filter-controls">
+                            <select id="songFilter">
+                                <option value="all">All Songs</option>
+                                <option value="original">Original</option>
+                                <option value="collaborative">Collaborative</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="userSongs" class="songs-grid">
+                        <!-- User's songs will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Collaborations Tab -->
+                <div id="collaborations" class="tab-content">
+                    <h3>My Collaborations</h3>
+                    <div id="userCollaborations" class="collaborations-list">
+                        <!-- User's collaborations will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Settings Tab -->
+                <div id="settings" class="tab-content">
+                    <div class="settings-sections">
+                        <div class="settings-section">
+                            <h3>Account Settings</h3>
+                            <form id="accountSettingsForm">
+                                <div class="form-group">
+                                    <label for="settingsEmail">Email</label>
+                                    <input type="email" id="settingsEmail">
+                                </div>
+                                <div class="form-group">
+                                    <label for="settingsName">Display Name</label>
+                                    <input type="text" id="settingsName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="settingsBio">Bio</label>
+                                    <textarea id="settingsBio" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3>Privacy Settings</h3>
+                            <div class="setting-item">
+                                <label class="switch">
+                                    <input type="checkbox" id="publicProfile">
+                                    <span class="slider"></span>
+                                </label>
+                                <div>
+                                    <strong>Public Profile</strong>
+                                    <p>Make your profile visible to everyone</p>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <label class="switch">
+                                    <input type="checkbox" id="emailNotifications">
+                                    <span class="slider"></span>
+                                </label>
+                                <div>
+                                    <strong>Email Notifications</strong>
+                                    <p>Receive email updates about collaborations</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3>Musical Preferences</h3>
+                            <form id="preferencesForm">
+                                <div class="form-group">
+                                    <label for="favoriteGenres">Favorite Genres</label>
+                                    <select id="favoriteGenres" multiple>
+                                        <option value="pop">Pop</option>
+                                        <option value="rock">Rock</option>
+                                        <option value="hip-hop">Hip Hop</option>
+                                        <option value="electronic">Electronic</option>
+                                        <option value="jazz">Jazz</option>
+                                        <option value="classical">Classical</option>
+                                        <option value="folk">Folk</option>
+                                        <option value="r&b">R&B</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="instruments">Instruments/Skills</label>
+                                    <select id="instruments" multiple>
+                                        <option value="vocals">Vocals</option>
+                                        <option value="guitar">Guitar</option>
+                                        <option value="piano">Piano</option>
+                                        <option value="drums">Drums</option>
+                                        <option value="bass">Bass</option>
+                                        <option value="production">Production</option>
+                                        <option value="songwriting">Songwriting</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn-primary">Update Preferences</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Edit Profile Modal -->
+    <div id="editProfileModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('editProfileModal')">&times;</span>
+            <h2>Edit Profile</h2>
+            <form id="editProfileForm">
+                <div class="form-group">
+                    <label for="editName">Display Name</label>
+                    <input type="text" id="editName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editBio">Bio</label>
+                    <textarea id="editBio" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="editSkills">Skills</label>
+                    <select id="editSkills" multiple>
+                        <option value="vocals">Vocals</option>
+                        <option value="guitar">Guitar</option>
+                        <option value="piano">Piano</option>
+                        <option value="drums">Drums</option>
+                        <option value="bass">Bass</option>
+                        <option value="production">Production</option>
+                        <option value="songwriting">Songwriting</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal('editProfileModal')">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Avatar Upload Modal -->
+    <div id="avatarModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('avatarModal')">&times;</span>
+            <h2>Update Profile Picture</h2>
+            <div class="avatar-upload">
+                <input type="file" id="avatarFile" accept="image/*" style="display: none;">
+                <div class="avatar-preview">
+                    <img id="avatarPreview" src="https://via.placeholder.com/120x120" alt="Avatar Preview">
+                </div>
+                <button class="btn-secondary" onclick="document.getElementById('avatarFile').click()">Choose Image</button>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn-secondary" onclick="closeModal('avatarModal')">Cancel</button>
+                <button type="button" class="btn-primary" onclick="uploadAvatar()">Save Avatar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="profile.js"></script>
+</body>
+</html>

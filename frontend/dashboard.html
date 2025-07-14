@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Legato</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="app-header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>🎵 Legato</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="dashboard.html" class="nav-link active">Dashboard</a>
+                <a href="#" class="nav-link">Discover</a>
+                <a href="#" class="nav-link">Charts</a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-primary" onclick="openUploadModal()">Upload Song</button>
+                <div class="user-menu">
+                    <img src="https://via.placeholder.com/32x32" alt="Profile" class="user-avatar" onclick="toggleUserMenu()">
+                    <div id="userDropdown" class="user-dropdown">
+                        <a href="profile.html">Profile</a>
+                        <a href="#" onclick="logout()">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="dashboard-main">
+        <div class="container">
+            <section class="dashboard-header">
+                <h1>Welcome back, <span id="userName">Musician</span>!</h1>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3 id="songsCount">0</h3>
+                        <p>Your Songs</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="collaborationsCount">0</h3>
+                        <p>Collaborations</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="votesCount">0</h3>
+                        <p>Total Votes</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-sections">
+                <div class="section-tabs">
+                    <button class="tab-btn active" onclick="showTab('trending')">Trending</button>
+                    <button class="tab-btn" onclick="showTab('my-songs')">My Songs</button>
+                    <button class="tab-btn" onclick="showTab('collaborations')">Collaborations</button>
+                </div>
+
+                <!-- Trending Tab -->
+                <div id="trending" class="tab-content active">
+                    <h2>Trending Songs</h2>
+                    <div id="trendingSongs" class="songs-grid">
+                        <!-- Songs will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- My Songs Tab -->
+                <div id="my-songs" class="tab-content">
+                    <div class="section-header">
+                        <h2>My Songs</h2>
+                        <button class="btn-secondary" onclick="openUploadModal()">+ Add New</button>
+                    </div>
+                    <div id="mySongs" class="songs-grid">
+                        <!-- User's songs will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Collaborations Tab -->
+                <div id="collaborations" class="tab-content">
+                    <h2>Recent Collaborations</h2>
+                    <div id="recentCollaborations" class="collaborations-list">
+                        <!-- Collaborations will be loaded here -->
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Upload Song Modal -->
+    <div id="uploadModal" class="modal">
+        <div class="modal-content large">
+            <span class="close" onclick="closeModal('uploadModal')">&times;</span>
+            <h2>Upload New Song</h2>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="songTitle">Song Title</label>
+                    <input type="text" id="songTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="songDescription">Description</label>
+                    <textarea id="songDescription" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="songGenre">Genre</label>
+                    <select id="songGenre" required>
+                        <option value="">Select genre...</option>
+                        <option value="pop">Pop</option>
+                        <option value="rock">Rock</option>
+                        <option value="hip-hop">Hip Hop</option>
+                        <option value="electronic">Electronic</option>
+                        <option value="jazz">Jazz</option>
+                        <option value="classical">Classical</option>
+                        <option value="folk">Folk</option>
+                        <option value="r&b">R&B</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="songFile">Audio/Video File</label>
+                    <input type="file" id="songFile" accept="audio/*,video/*" required>
+                    <small>Supported formats: MP3, WAV, FLAC, MOV, MP4 (max 50MB)</small>
+                </div>
+                <div class="form-group">
+                    <label for="collaborationType">Looking for:</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" value="vocals"> Vocals</label>
+                        <label><input type="checkbox" value="lyrics"> Lyrics</label>
+                        <label><input type="checkbox" value="instruments"> Instruments</label>
+                        <label><input type="checkbox" value="production"> Production</label>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal('uploadModal')">Cancel</button>
+                    <button type="submit" class="btn-primary">Upload Song</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Song Card Template -->
+    <template id="songCardTemplate">
+        <div class="song-card">
+            <div class="song-cover">
+                <div class="play-btn" onclick="playSong(this)">▶️</div>
+            </div>
+            <div class="song-info">
+                <h3 class="song-title"></h3>
+                <p class="song-artist"></p>
+                <p class="song-genre"></p>
+                <div class="song-stats">
+                    <span class="votes">👍 <span class="vote-count">0</span></span>
+                    <span class="collaborations">🤝 <span class="collab-count">0</span></span>
+                </div>
+            </div>
+            <div class="song-actions">
+                <button class="btn-secondary btn-sm" onclick="collaborateOnSong(this)">Collaborate</button>
+                <button class="btn-outline btn-sm" onclick="voteSong(this)">Vote</button>
+            </div>
+        </div>
+    </template>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

@@ -33,7 +33,23 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
       navigation.navigate('Main');
     } catch (error) {
       console.error('Auth error:', error);
-      Alert.alert('Error', error as string);
+      
+      // Show specific error messages with helpful suggestions
+      let errorMessage = error as string;
+      let title = 'Error';
+      
+      if (errorMessage.includes('Username or email already exists')) {
+        title = 'Account Already Exists';
+        errorMessage = 'This username or email is already registered. Please try a different username/email or login instead.';
+      } else if (errorMessage.includes('Invalid credentials')) {
+        title = 'Invalid Credentials';
+        errorMessage = 'The email or password you entered is incorrect. Please check your credentials and try again.';
+      } else if (errorMessage.includes('required')) {
+        title = 'Missing Information';
+        errorMessage = 'Please make sure all required fields are filled out correctly.';
+      }
+      
+      Alert.alert(title, errorMessage);
     }
   };
 
@@ -52,7 +68,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
         {!isLogin && (
           <TextInput
             style={styles.input}
-            placeholder="Username"
+            placeholder="Username (3-20 characters)"
             placeholderTextColor="#666"
             value={username}
             onChangeText={setUsername}
@@ -62,7 +78,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
         
         <TextInput
           style={styles.input}
-          placeholder="Email"
+          placeholder="Email address"
           placeholderTextColor="#666"
           value={email}
           onChangeText={setEmail}
@@ -72,7 +88,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
         
         <TextInput
           style={styles.input}
-          placeholder="Password"
+          placeholder="Password (min 6 characters)"
           placeholderTextColor="#666"
           value={password}
           onChangeText={setPassword}

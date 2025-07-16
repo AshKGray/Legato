@@ -20,7 +20,12 @@ export const loginUser = createAsyncThunk(
       }
       return rejectWithValue(response.error || 'Login failed');
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Login failed');
+      // Extract the specific error message from the API response
+      const errorMessage = error.response?.data?.error || 
+                          error.response?.data?.message || 
+                          error.message || 
+                          'Login failed';
+      return rejectWithValue(errorMessage);
     }
   }
 );
@@ -35,7 +40,12 @@ export const registerUser = createAsyncThunk(
       }
       return rejectWithValue(response.error || 'Registration failed');
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Registration failed');
+      // Extract the specific error message from the API response
+      const errorMessage = error.response?.data?.error || 
+                          error.response?.data?.message || 
+                          error.message || 
+                          'Registration failed';
+      return rejectWithValue(errorMessage);
     }
   }
 );

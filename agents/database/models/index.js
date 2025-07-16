@@ -59,6 +59,7 @@ User.hasMany(Notification, { foreignKey: 'userId' });
 Notification.belongsTo(User, { foreignKey: 'userId' });
 
 module.exports = {
+  Sequelize,
   sequelize,
   User,
   Song,

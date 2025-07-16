@@ -323,3 +323,58 @@ You need to start the voting agent from its own directory (`agents/voting`).
 ---
 
 If you do this and still have issues, copy the terminal output and any error messages here, and I’ll help you fix it right away! 
+
+---
+
+**Pushing to a remote repository** means uploading your local code changes (commits) to a remote server, usually on a platform like GitHub, GitLab, or Bitbucket. This allows you to:
+
+- **Back up your code** safely in the cloud
+- **Collaborate** with others (they can see, review, and merge your changes)
+- **Deploy** your code to production or other environments
+- **Access your code** from anywhere
+
+---
+
+## How It Works
+
+- **Local repository:** This is your code and commit history on your own computer.
+- **Remote repository:** This is a copy of your repository hosted on a remote server (e.g., GitHub).
+
+When you run:
+```sh
+git push
+```
+you are telling git:  
+> “Take my local commits and upload them to the remote repository.”
+
+---
+
+## Example
+
+1. You make changes and commit them locally:
+   ```sh
+   git add .
+   git commit -m "My changes"
+   ```
+2. You push to the remote:
+   ```sh
+   git push
+   ```
+3. Now, your changes are available on GitHub (or wherever your remote is set up).
+
+---
+
+## Why Push?
+
+- To **share your work** with teammates
+- To **back up** your code
+- To **trigger deployments** or CI/CD pipelines
+- To **collaborate** and review code
+
+---
+
+If you want to push your changes and you have a remote set up, just run:
+```sh
+git push
+```
+If you need help setting up a remote or want to know where your remote is, let me know! 

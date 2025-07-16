@@ -1,5 +1,6 @@
 const moment = require('moment');
 const _ = require('lodash');
+const { Op } = require('sequelize');
 
 /**
  * Chart Integration for Voting System
@@ -513,7 +514,7 @@ class ChartIntegration {
       ],
       where: {
         featuredVersionId: {
-          [this.database.Sequelize.Op.ne]: null
+          [Op.ne]: null
         }
       }
     });
@@ -566,7 +567,7 @@ class ChartIntegration {
           model: this.database.Vote,
           where: {
             createdAt: {
-              [this.database.Sequelize.Op.gt]: cutoff
+              [Op.gt]: cutoff
             }
           },
           required: false
@@ -575,7 +576,7 @@ class ChartIntegration {
           model: this.database.Comment,
           where: {
             createdAt: {
-              [this.database.Sequelize.Op.gt]: cutoff
+              [Op.gt]: cutoff
             }
           },
           required: false
@@ -593,7 +594,7 @@ class ChartIntegration {
       group: ['genre'],
       where: {
         genre: {
-          [this.database.Sequelize.Op.ne]: null
+          [Op.ne]: null
         }
       }
     });

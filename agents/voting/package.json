@@ -4,7 +4,7 @@
   "description": "Democratic Voting System for Legato Music Collaboration Platform",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node server.js",
     "test": "jest",
     "dev": "nodemon index.js"
   },

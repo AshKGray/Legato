@@ -225,8 +225,9 @@ class AntiGamingSystem {
    * Initialize rate limiters
    */
   initializeRateLimiters() {
+    const redisClient = this.config.redisClient || (this.config.redisConfig ? this.config.redisConfig : undefined);
     const rateLimiterOptions = {
-      storeClient: this.config.redisConfig ? this.config.redisConfig : undefined,
+      storeClient: redisClient,
       keyPrefix: 'legato_voting_',
     };
 

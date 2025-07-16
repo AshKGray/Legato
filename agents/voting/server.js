@@ -13,9 +13,8 @@ redisClient.on('error', (err) => console.error('Redis Client Error', err));
   await redisClient.connect();
 
   const orchestrator = new DemocraticVotingOrchestrator({
-    antiGamingConfig: {
-      redisClient
-    }
+    port: 3010, // or any free port
+    antiGamingConfig: { redisClient }
   });
 
   orchestrator.initialize(databaseModels)
@@ -24,4 +23,15 @@ redisClient.on('error', (err) => console.error('Redis Client Error', err));
       console.error('Failed to start voting system:', err);
       process.exit(1);
     });
-})(); 
+})();
+
+// Check if something else is using port 3006
+const { exec } = require('child_process');
+exec('lsof -i :3006', (error, stdout, stderr) => {
+  if (error) {
+    console.error(`exec error: ${error}`);
+    return;
+  }
+  console.log(`stdout: ${stdout}`);
+  console.error(`stderr: ${stderr}`);
+});

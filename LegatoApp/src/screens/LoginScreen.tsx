@@ -23,13 +23,16 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
     }
 
     try {
+      console.log('Attempting:', isLogin ? 'login' : 'registration');
       if (isLogin) {
         await dispatch(loginUser({ email, password })).unwrap();
       } else {
         await dispatch(registerUser({ username, email, password })).unwrap();
       }
+      console.log('Success! Navigating to Main');
       navigation.navigate('Main');
     } catch (error) {
+      console.error('Auth error:', error);
       Alert.alert('Error', error as string);
     }
   };

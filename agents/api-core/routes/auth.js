@@ -14,7 +14,7 @@ router.post('/register', async (req, res) => {
 
     // Validate required fields
     if (!username || !email || !password) {
-      return res.status(400).json({ error: 'Username, email, and password are required' });
+      return res.status(400).json({ success: false, error: 'Username, email, and password are required' });
     }
 
     // Check if user already exists
@@ -25,7 +25,7 @@ router.post('/register', async (req, res) => {
     });
 
     if (existingUser) {
-      return res.status(409).json({ error: 'Username or email already exists' });
+      return res.status(409).json({ success: false, error: 'Username or email already exists' });
     }
 
     // Hash password
@@ -45,62 +45,68 @@ router.post('/register', async (req, res) => {
     const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '24h' });
 
     res.status(201).json({
+      success: true,
       message: 'User created successfully',
-      token,
-      user: {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        displayName: user.displayName,
-        skills: user.skills,
-        genres: user.genres,
+      data: {
+        token,
+        user: {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          displayName: user.displayName,
+          skills: user.skills,
+          genres: user.genres,
+        }
       }
     });
   } catch (error) {
     console.error('Registration error:', error);
-    res.status(500).json({ error: 'Registration failed' });
+    res.status(500).json({ success: false, error: 'Registration failed' });
   }
 });
 
 // Login user
 router.post('/login', async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    if (!username || !password) {
-      return res.status(400).json({ error: 'Username and password are required' });
+    if (!email || !password) {
+      return res.status(400).json({ success: false, error: 'Email and password are required' });
     }
 
-    // Find user
-    const user = await User.findOne({ where: { username } });
+    // Find user by email
+    const user = await User.findOne({ where: { email } });
     if (!user) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ success: false, error: 'Invalid credentials' });
     }
 
     // Verify password
     const isValid = await bcrypt.compare(password, user.passwordHash);
     if (!isValid) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ success: false, error: 'Invalid credentials' });
     }
 
     // Generate JWT token
     const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '24h' });
 
     res.json({
+      success: true,
       message: 'Login successful',
-      token,
-      user: {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        displayName: user.displayName,
-        skills: user.skills,
-        genres: user.genres,
+      data: {
+        token,
+        user: {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          displayName: user.displayName,
+          skills: user.skills,
+          genres: user.genres,
+        }
       }
     });
   } catch (error) {
     console.error('Login error:', error);
-    res.status(500).json({ error: 'Login failed' });
+    res.status(500).json({ success: false, error: 'Login failed' });
   }
 });
 

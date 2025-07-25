@@ -1,0 +1,19 @@
+CONFIGURATION: n = 3 files
+INSTRUCTIONS
+Look at the app design that has been attached.
+Create n different versions of that same app, each designed for a different user persona.
+Each version should have the same functionality but be tailored for different types of users like:
+Artist
+Doctor
+Farmer
+Developer
+Businessman
+Teacher
+Student
+Chef
+Engineer
+Or any other profession/persona---
+description:
+globs:
+alwaysApply: false
+---
